@@ -23,6 +23,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Ini digunakan untuk bootstrap layanan Anda.
+        // Ini digunakan untuk bootstrap layanan.
     }
 }
