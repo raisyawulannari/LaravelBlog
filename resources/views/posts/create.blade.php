@@ -58,7 +58,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="content">Content (Image)</label>
+                                <label for="content">Content</label>
                                 <input type="file" id="content" class="form-control @error('content') is-invalid @enderror" name="content">
 
                                 @error('content')

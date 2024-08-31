@@ -10,7 +10,6 @@ class PostRequest extends FormRequest
     {
         return true; 
     }
-
     public function rules()
     {
         $rules = [
@@ -18,7 +17,6 @@ class PostRequest extends FormRequest
             'content' => 'nullable|image|max:2048',
             'status' => 'required',
         ];        
-
         return $rules;
     }
 }

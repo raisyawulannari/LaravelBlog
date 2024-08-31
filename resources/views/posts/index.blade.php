@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Post List</title>
+    <title>Posts List</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
@@ -110,7 +110,7 @@
                                     <th scope="col">Title</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Content</th>
-                                    <th scope="col">Create At</th>
+                                    <th scope="col">Created At</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -118,20 +118,24 @@
                                 @forelse ($posts as $post)
                                 <tr>
                                     <td>{{ $post->title }}</td>
-                                    <td>{{ $post->status == 0 ? 'Draft':'Publish' }}</td>
+                                    <td>{{ $post->status == 0 ? 'Draft' : 'Publish' }}</td>
                                     <td class="text-center">
+                                    @if (strpos($post->content, '<img') !== false)
+                                        {!! $post->content !!}
+                                    @else
                                         @if ($post->content)
                                             <img src="{{ asset('storage/' . $post->content) }}" class="rounded" style="width: 60px; height: auto;" alt="Content Image">
                                         @else
                                             No Image
                                         @endif
-                                    </td>
+                                    @endif
+                                </td>
+
                                     <td>{{ $post->created_at->format('d-m-Y') }}</td>
                                     <td class="text-center">
                                         <form onsubmit="return confirm('Apakah Anda Yakin ?');"
                                             action="{{ route('posts.destroy', $post->id) }}" method="POST">
-                                            <a href="{{ route('posts.edit', $post->id) }}"
-                                                class="btn btn-edit">EDIT</a>
+                                            <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-edit">EDIT</a>
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-delete">HAPUS</button>

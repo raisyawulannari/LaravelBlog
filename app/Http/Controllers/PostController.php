@@ -2,90 +2,63 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\PostServiceInterface;
+use App\Http\Requests\PostRequest;
+use App\Services\PostService; 
 use App\Models\Post;
-use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
     protected $postService;
 
-    public function __construct(PostServiceInterface $postService)
+    public function __construct(PostService $postService) 
     {
         $this->postService = $postService;
     }
 
-    /**
-     * Menampilkan daftar semua post.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $posts = Post::all(); // Ambil semua post dari database
-        return view('posts.index', compact('posts')); // Kirim data ke view
+        $posts = $this->postService->getAllPosts(); 
+        return view('posts.index', compact('posts')); 
     }
 
-    /**
-     * Menampilkan formulir untuk membuat post baru.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        return view('posts.create'); // Tampilkan formulir untuk membuat post
+        return view('posts.create'); 
     }
 
-    /**
-     * Simpan post baru ke database.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        $data = $request->all();
-        $this->postService->createPost($data);
-
-        return redirect()->route('posts.index');
+        $validatedData = $request->validated();
+        $this->postService->createPost($validatedData, $request->file('image'));
+        return redirect()->route('posts.index')->with('success', 'Post created successfully.');
     }
 
-    /**
-     * Menampilkan formulir untuk mengedit post yang ada.
-     *
-     * @param \App\Models\Post $post
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Post $post)
+     public function edit($id)
     {
-        return view('posts.edit', compact('post')); // Tampilkan formulir untuk mengedit post
+        $post = $this->postService->findPost($id);
+        return view('posts.edit', compact('post'));
     }
 
-    /**
-     * Perbarui post yang ada.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Post $post
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function update(Request $request, Post $post)
+    public function update(PostRequest $request, $id)
     {
-        $data = $request->all();
-        $this->postService->updatePost($post, $data);
-
-        return redirect()->route('posts.index');
+        $validatedData = $request->validated();
+         $this->postService->updatePost($id, $validatedData, $request->file('content'));
+        // $image = $request->file('image');
+        // $this->postService->updatePost($id, $validatedData, $image);
+        return redirect()->route('posts.index')->with('success', 'Post updated successfully.');
     }
 
-    /**
-     * Hapus post yang ada.
-     *
-     * @param \App\Models\Post $post
-     * @return \Illuminate\Http\RedirectResponse
-     */
+
+    // public function destroy(Post $post)
+    // {
+    //     $this->postService->deletePost($id);
+    //     return redirect()->route('posts.index')->with('success', 'Post successfully deleted.');
+    // }
+
     public function destroy(Post $post)
-    {
-        $this->postService->deletePost($post);
+{
+    $this->postService->deletePost($post->id);
+    return redirect()->route('posts.index')->with('success', 'Post successfully deleted.');
+}
 
-        return redirect()->route('posts.index');
-    }
 }

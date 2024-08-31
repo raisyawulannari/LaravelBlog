@@ -2,30 +2,19 @@
 
 namespace App\Services;
 
-use App\Repositories\PostRepositoryInterface;
+use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile; // Perbaiki tipe untuk file upload
 use App\Models\Post;
 
-class PostService
+interface PostService
 {
-    protected $postRepository;
+    public function getAllPosts();
 
-    public function __construct(PostRepositoryInterface $postRepository)
-    {
-        $this->postRepository = $postRepository;
-    }
+    public function createPost(array $data, UploadedFile $image = null); 
 
-    public function createPost(array $data): Post
-    {
-        return $this->postRepository->create($data);
-    }
+    public function updatePost($id, array $data, UploadedFile $image = null); 
 
-    public function updatePost(Post $post, array $data): bool
-    {
-        return $this->postRepository->update($post, $data);
-    }
+    public function deletePost($id);
 
-    public function deletePost(Post $post): bool
-    {
-        return $this->postRepository->delete($post);
-    }
+    public function storePost(Request $request): Post; 
 }

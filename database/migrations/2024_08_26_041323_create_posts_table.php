@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('content');
-            $table->smallInteger('status');
+            $table->text('content')->nullable(); // Mengubah dari string ke text dan nullable
+            $table->smallInteger('status')->default(0); // Menambahkan nilai default untuk status
             $table->timestamps();
+            
         });
     }
 

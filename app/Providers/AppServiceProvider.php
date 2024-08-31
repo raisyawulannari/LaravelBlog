@@ -3,26 +3,21 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Services\PostService;
+use App\Services\PostServiceImplement;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register services.
-     *
-     * @return void
-     */
     public function register()
     {
-        // Daftarkan binding service atau komponen di sini.
+        $this->app->bind(PostService::class, PostServiceImplement::class);
     }
-
-    /**
-     * Bootstrap services.
-     *
-     * @return void
-     */
     public function boot()
     {
+<<<<<<< Updated upstream
         // Ini digunakan untuk bootstrap layanan.
+=======
+
+>>>>>>> Stashed changes
     }
 }
