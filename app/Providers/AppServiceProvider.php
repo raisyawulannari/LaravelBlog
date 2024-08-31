@@ -14,10 +14,5 @@ class AppServiceProvider extends ServiceProvider
     }
     public function boot()
     {
-<<<<<<< Updated upstream
-        // Ini digunakan untuk bootstrap layanan.
-=======
-
->>>>>>> Stashed changes
     }
 }
