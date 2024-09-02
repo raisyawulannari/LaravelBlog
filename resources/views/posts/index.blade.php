@@ -1,87 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Post List</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            margin-top: 30px;
-        }
-        .btn-new-post {
-            background-color: #ff66b2;
-            color: #fff;
-            border: none;
-            border-radius: 50px;
-            padding: 10px 20px;
-            font-size: 1rem;
-            transition: background-color 0.3s ease;
-        }
-        .btn-new-post:hover {
-            background-color: #ff3385;
-        }
-        .card {
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .card-header {
-            background-color: #ff66b2;
-            color: #fff;
-            padding: 15px;
-            font-size: 1.25rem;
-            font-weight: 600;
-        }
-        .table thead th {
-            background-color: #ff99cc;
-            color: #fff;
-            text-align: center;
-        }
-        .table tbody tr:hover {
-            background-color: #ffe6f0;
-        }
-        .btn-edit {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            padding: 5px 10px;
-            font-size: 0.875rem;
-        }
-        .btn-edit:hover {
-            background-color: #0056b3;
-        }
-        .btn-delete {
-            background-color: #dc3545;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            padding: 5px 10px;
-            font-size: 0.875rem;
-        }
-        .btn-delete:hover {
-            background-color: #c82333;
-        }
-        .text-muted {
-            color: #888;
-        }
-    </style>
-</head>
+@extends('layouts.main')
+@section('content')
 
 <body>
 
-    <div class="container">
+    <div class="container" style="padding-left: 30px; padding-right: 0px;">
         <div class="row">
             <div class="col-md-12">
 
@@ -97,63 +19,97 @@
                     {{ session('error') }}
                 </div>
                 @endif
+                <div class="main-content" style="padding-top: 0;>
+                    <div class=" container-fluid">
+                    <section>
+                        <div class="py-2 mb-4">
+                            <h1 class="">Post</h1>
+                            <nav class="breadcrumb-nav d-flex">
+                                <h6 class="breadcrumb-text mb-0">
+                                    <a href="{{ route('posts.index') }}" class="text-reset">Home</a>
+                                    <span>/</span>
+                                    <a href="" class="text-reset"><u>post</u></a>
+                                </h6>
+                            </nav>
+                        </div>
+                        <!-- Card layout -->
+                        <div class="card">
+                            <div class="card-header">
+                                <a href="{{ route('posts.create') }}" class="btn btn-primary">Tambah Post</a>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="datatable-server" class="table table-hover table-striped nowrap" style="width: 100%">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Title</th>
+                                                <th>Status</th>
+                                                <th>Content</th>
+                                                <th>Create At</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @forelse ($posts as $index => $post)
+                                            <tr>
+                                                <td>{{ $index + 1 }}</td>
+                                                <td>{{ $post->title }}</td>
+                                                <td>{{ $post->status == 0 ? 'Draft':'Publish' }}</td>
+                                                <td class="text-center">
+                                                    @if ($post->content)
+                                                    <img src="{{ asset('storage/' . $post->content) }}" class="rounded" style="width: 60px; height: auto;" alt="Content Image">
+                                                    @else
+                                                    No Image
+                                                    @endif
+                                                </td>
+                                                <td>{{ $post->created_at->format('d-m-Y') }}</td>
+                                                <td class="text-center">
+                                                    <form onsubmit="return confirm('Apakah Anda Yakin ?');"
+                                                        action="{{ route('posts.destroy', $post->id) }}" method="POST">
+                                                        <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-primary btn-sm">EDIT</a>
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm">HAPUS</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            @empty
+                                            <tr>
+                                                <td class="text-center text-muted" colspan="6">Data post tidak tersedia</td>
+                                            </tr>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
 
-                <div class="card border-0">
-                    <div class="card-header">
-                        My Blog
-                        <a href="{{ route('posts.create') }}" class="btn btn-new-post float-right">New Post</a>
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-bordered mt-3">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Title</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Content</th>
-                                    <th scope="col">Create At</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($posts as $post)
-                                <tr>
-                                    <td>{{ $post->title }}</td>
-                                    <td>{{ $post->status == 0 ? 'Draft':'Publish' }}</td>
-                                    <td class="text-center">
-                                        @if ($post->content)
-                                            <img src="{{ asset('storage/' . $post->content) }}" class="rounded" style="width: 60px; height: auto;" alt="Content Image">
-                                        @else
-                                            No Image
-                                        @endif
-                                    </td>
-                                    <td>{{ $post->created_at->format('d-m-Y') }}</td>
-                                    <td class="text-center">
-                                        <form onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                            action="{{ route('posts.destroy', $post->id) }}" method="POST">
-                                            <a href="{{ route('posts.edit', $post->id) }}"
-                                                class="btn btn-edit">EDIT</a>
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-delete">HAPUS</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                @empty
-                                <tr>
-                                    <td class="text-center text-muted" colspan="5">Data post tidak tersedia</td>
-                                </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <!-- Tambahkan CSS custom untuk menambah jarak antar tombol pagination -->
+        <style>
+            .dataTables_paginate .paginate_button {
+                margin-right: 10px;
+                /* Menambahkan margin di kanan tombol pagination */
+            }
+        </style>
+
+        <!-- Include DataTables JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap5.min.js"></script>
+
+        <!-- Inisialisasi DataTables -->
+        <script>
+            $(document).ready(function() {
+                $('#datatable-server').DataTable({
+                    responsive: true
+                });
+            });
+        </script>
 
 </body>
-
-</html>
+@endsection

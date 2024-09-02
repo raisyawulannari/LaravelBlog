@@ -14,14 +14,16 @@
             margin: 0;
             padding: 0;
         }
+
         .hero {
-            background: linear-gradient(135deg, #ff66b2, #ff99cc);
+            background: linear-gradient(135deg, #007bff, #00c2ff);
             color: #fff;
             padding: 100px 0;
             text-align: center;
             position: relative;
             overflow: hidden;
         }
+
         .hero::before {
             content: "";
             position: absolute;
@@ -34,18 +36,21 @@
             opacity: 0.3;
             z-index: -1;
         }
+
         .hero h1 {
             font-size: 4rem;
             margin-bottom: 20px;
             font-weight: 700;
         }
+
         .hero p {
             font-size: 1.5rem;
             margin-bottom: 30px;
             font-weight: 300;
         }
+
         .btn-primary {
-            background-color: #ff66b2;
+            background-color: #007bff;
             border: none;
             border-radius: 50px;
             padding: 10px 30px;
@@ -53,13 +58,16 @@
             transition: background-color 0.3s ease;
             color: #fff;
         }
+
         .btn-primary:hover {
-            background-color: #ff3385;
+            background-color: #0056b3;
         }
+
         .features {
-            background-color: #f8f9fa;
+            background-color: #f0f8ff;
             padding: 60px 0;
         }
+
         .features .feature-item {
             text-align: center;
             padding: 20px;
@@ -68,19 +76,23 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
         }
+
         .features .feature-item:hover {
             transform: translateY(-10px);
         }
+
         .feature-icon {
             font-size: 3rem;
-            color: #ff66b2;
+            color: #007bff;
             margin-bottom: 20px;
         }
+
         .feature-title {
             font-size: 1.5rem;
             font-weight: 500;
             margin-bottom: 10px;
         }
+
         .feature-description {
             font-size: 1rem;
             color: #666;
