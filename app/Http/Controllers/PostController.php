@@ -15,33 +15,17 @@ class PostController extends Controller
         $this->postService = $postService;
     }
 
-    /**
-     * Menampilkan daftar semua post.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $posts = Post::all(); // Ambil semua post dari database
-        return view('posts.index', compact('posts')); // Kirim data ke view
+        $posts = Post::all();
+        return view('posts.index', compact('posts'));
     }
 
-    /**
-     * Menampilkan formulir untuk membuat post baru.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        return view('posts.create'); // Tampilkan formulir untuk membuat post
+        return view('posts.create');
     }
 
-    /**
-     * Simpan post baru ke database.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function store(Request $request)
     {
         $data = $request->all();
@@ -50,24 +34,11 @@ class PostController extends Controller
         return redirect()->route('posts.index');
     }
 
-    /**
-     * Menampilkan formulir untuk mengedit post yang ada.
-     *
-     * @param \App\Models\Post $post
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Post $post)
     {
-        return view('posts.edit', compact('post')); // Tampilkan formulir untuk mengedit post
+        return view('posts.edit', compact('post'));
     }
 
-    /**
-     * Perbarui post yang ada.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Post $post
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function update(Request $request, Post $post)
     {
         $data = $request->all();
@@ -76,12 +47,6 @@ class PostController extends Controller
         return redirect()->route('posts.index');
     }
 
-    /**
-     * Hapus post yang ada.
-     *
-     * @param \App\Models\Post $post
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function destroy(Post $post)
     {
         $this->postService->deletePost($post);

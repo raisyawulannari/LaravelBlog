@@ -176,6 +176,7 @@ return [
          * Custom Service Providers...
          */
         App\Providers\PostServiceProvider::class, // Tambahkan ini untuk PostService
+        App\Providers\JobServiceProvider::class,
     ],
 
     /*

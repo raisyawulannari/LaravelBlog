@@ -2,11 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\JobController;
 
-// Rute utama mengarahkan ke welcome.blade.php
+
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Rute resource untuk PostController
 Route::resource('posts', PostController::class);
+Route::resource('jobs', JobController::class);
+
+

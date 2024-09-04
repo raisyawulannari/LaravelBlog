@@ -49,14 +49,26 @@
             <ul class="p-0 m-0">
               <li class="menu-item ripple">
                 <a
-                  href="{{ route('posts.index') }}"
+                  href="{{ route('jobs.index') }}"
                   data-mdb-placement="right"
                   data-mdb-toggle="tooltip"
-                  title="Post"
+                  title="Jobs"
                   data-mdb-delay='{"show":"350", "hide":"0"}'
                   class="sub-item">
                   <i class="far fa-building fa-fw"></i>
-                  <span>Post</span>
+                  <span>Jobs</span>
+                </a>
+              </li>
+              <li class="menu-item ripple active">
+                <a
+                  href="{{ route('posts.index') }}"
+                  data-mdb-placement="right"
+                  data-mdb-toggle="tooltip"
+                  title="Posts"
+                  data-mdb-delay='{"show":"350", "hide":"0"}'
+                  class="sub-item">
+                  <i data-feather="grid" class="fa-fw"></i>
+                  <span>Posts</span>
                 </a>
               </li>
 </main>
