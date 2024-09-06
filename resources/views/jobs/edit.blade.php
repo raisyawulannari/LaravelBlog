@@ -36,12 +36,26 @@
                                 <input type="text" id="platform" name="platform" class="form-control @error('platform') is-invalid @enderror" value="{{ old('platform', $job->platform) }}" required>
 
                                 <!-- error message untuk platform -->
-                                @error('queue')
+                                @error('platform')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
                                 @enderror
                             </div>
+
+                            <!-- Input activity_name -->
+                            <div class="form-group">
+                                <label for="activity_name">Activity Name</label>
+                                <input type="text" id="activity_name" name="activity_name" class="form-control @error('activity_name') is-invalid @enderror" value="{{ old('activity_name', $job->activity_name) }}" required>
+
+                                <!-- error message untuk platform -->
+                                @error('activity_name')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>
+
 
                             <!-- Input description -->
                             <div class="form-group">

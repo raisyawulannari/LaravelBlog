@@ -177,6 +177,10 @@ return [
          */
         App\Providers\PostServiceProvider::class, // Tambahkan ini untuk PostService
         App\Providers\JobServiceProvider::class,
+        App\Providers\LocationServiceProvider::class,
+        App\Providers\JobLocationServiceProvider::class,
+
+
     ],
 
     /*

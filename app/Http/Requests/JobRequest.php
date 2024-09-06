@@ -15,6 +15,7 @@ class JobRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'activity_name' => 'required|string|max:255',  
             'platform' => 'required|string|max:255',  
             'description' => 'required',               
             'deadline' => 'required|date',         
@@ -25,6 +26,8 @@ class JobRequest extends FormRequest
     public function messages(): array
     {
         return [
+            
+            'activity_name.required' => 'Field activity name harus diisi.',
             'platform.required' => 'Field platform harus diisi.',
             'platform.string' => 'Field platform harus berupa string.',
             'platform.max' => 'Field platform tidak boleh lebih dari 255 karakter.',

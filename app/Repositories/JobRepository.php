@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Models\Job;
 
-
 class JobRepository
 {
     protected $model;
@@ -19,6 +18,11 @@ class JobRepository
         return $this->model->with('chef')->paginate($perPage);
     }
 
+    public function all()
+    {
+        return $this->model->all();
+    }
+
     public function find($id)
     {
         return $this->model->findOrFail($id);
@@ -31,15 +35,15 @@ class JobRepository
 
     public function update($id, array $data)
     {
-        $jobs = $this->find($id);
-        $jobs->update($data);
-        return $jobs;
+        $job = $this->find($id);
+        $job->update($data);
+        return $job;
     }
 
     public function delete($id)
     {
-        $jobs = $this->find($id);
-        $jobs->delete();
-        return $jobs;
+        $job = $this->find($id);
+        $job->delete();
+        return true;
     }
 }

@@ -14,18 +14,41 @@ class JobServiceImplement implements JobServiceInterface
         $this->jobRepository = $jobRepository;
     }
 
+    public function getAllJobs(): array
+    {
+        // Mengembalikan array dari semua pekerjaan
+        return $this->jobRepository->all()->toArray();
+    }
+
+    public function getJob(int $id): ?Job
+    {
+        return $this->jobRepository->find($id);
+    }
+
     public function createJob(array $data): Job
     {
         return $this->jobRepository->create($data);
     }
 
-    public function updateJob(Job $jobs, array $data): bool
+    public function updateJob(int $id, array $data): bool
     {
-        return $this->jobRepository->update($jobs, $data);
+        $job = $this->jobRepository->find($id);
+
+        if (!$job) {
+            return false;
+        }
+
+        return $this->jobRepository->update($job, $data);
     }
 
-    public function deleteJob(Job $jobs): bool
+    public function deleteJob(int $id): bool
     {
-        return $this->jobRepository->delete($jobs);
+        $job = $this->jobRepository->find($id);
+
+        if (!$job) {
+            return false;
+        }
+
+        return $this->jobRepository->delete($job);
     }
 }

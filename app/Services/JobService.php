@@ -26,7 +26,7 @@ class JobService
         return $this->jobRepository->update($jobs, $data);
     }
 
-    public function deleteJob(Job $jobs): Job
+    public function deleteJob(Job $jobs): bool
     {
         return $this->jobRepository->delete($jobs);
     }

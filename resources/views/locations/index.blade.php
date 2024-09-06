@@ -19,12 +19,12 @@
         <div class="container-fluid">
             <section>
                 <div class="py-2 mb-4">
-                    <h1 class="">Jobs</h1>
+                    <h1 class="">Locations</h1>
                     <nav class="breadcrumb-nav d-flex">
                         <h6 class="breadcrumb-text mb-0">
-                            <a href="{{ route('jobs.index') }}" class="text-reset">Home</a>
+                            <a href="{{ route('locations.index') }}" class="text-reset">Home</a>
                             <span>/</span>
-                            <a href="" class="text-reset"><u>Jobs</u></a>
+                            <a href="" class="text-reset"><u>Locations</u></a>
                         </h6>
                     </nav>
                 </div>
@@ -32,7 +32,7 @@
                 <!-- Card layout -->
                 <div class="card">
                     <div class="card-header">
-                        <a href="{{ route('jobs.create') }}" class="btn btn-primary">Create New Job</a>
+                        <a href="{{ route('locations.create') }}" class="btn btn-primary">Add New Location</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -40,35 +40,33 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Activity Name</th>
-                                        <th>Platform</th>
-                                        <th>Description</th>
-                                        <th>Deadline</th>
-                                        <th>Brand Title</th>
+                                        <th>City</th>
+                                        <th>Country</th>
+                                        <th>Address</th>
+                                        <th>Jobs</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($jobs as $index => $job)
+                                    @forelse($locations as $index => $location)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
-                                        <td>{{ $job->activity_name }}</td>
-                                        <td>{{ $job->platform }}</td>
-                                        <td>{{ \Illuminate\Support\Str::limit($job->description, 50) }}</td>
-                                        <td>{{ $job->deadline->format('Y-m-d H:i:s') }}</td>
-                                        <td>{{ $job->post->title }}</td>
+                                        <td>{{ $location->city }}</td>
+                                        <td>{{ $location->country }}</td>
+                                        <td>{{ $location->address }}</td>
+                                        
                                         <td class="text-center">
-                                            <a href="{{ route('jobs.edit', $job->id) }}" class="btn btn-primary btn-sm">Edit</a>
-                                            <form action="{{ route('jobs.destroy', $job->id) }}" method="POST" style="display:inline;">
+                                            <a href="{{ route('locations.edit', $location->location_id) }}" class="btn btn-primary btn-sm">Edit</a>
+                                            <form action="{{ route('locations.destroy', $location->location_id) }}" method="POST" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger btn-sm">DELETE</button>
                                             </form> 
                                         </td>
-                                    </tr>
+                                    </tr> 
                                     @empty
                                     <tr>
-                                        <td colspan="6" class="text-center text-muted">No jobs found</td>
+                                        <td colspan="6" class="text-center text-muted">No locations found</td>
                                     </tr>
                                     @endforelse
                                 </tbody>

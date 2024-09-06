@@ -9,11 +9,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('jobs', function (Blueprint $table) {
-            $table->id();
-            $table->string('platform')->index();
-            // $table->string('platform')->default('default_value');
-            $table->longText('description');
-            // $table->longText('description')->default('default_value');
+            $table->id(); // Primary key auto-increment
+            $table->string('activity_name')->index();
+            $table->string('platform'); // Default value tidak diatur
+            $table->longText('description'); // Default value tidak diatur
             $table->dateTime('deadline');
             $table->timestamps();
 
@@ -26,9 +25,8 @@ return new class extends Migration
     {
         Schema::table('jobs', function (Blueprint $table) {
             $table->dropForeign(['post_id']);
+            // Jika Anda tidak ingin menghapus kolom ini, hapus komentar di bawah
             // $table->dropColumn('post_id');
-            $table->string('platform')->default(null)->change();
-            $table->string('description')->default(null)->change();
         });
 
         Schema::dropIfExists('jobs');

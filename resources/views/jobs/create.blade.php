@@ -25,6 +25,16 @@
             <form action="{{ route('jobs.store') }}" method="POST">
                 @csrf
                 <div class="mb-3">
+                    <label for="activity_name" class="form-label">Activity Name</label>
+                    <input type="text" class="form-control @error('activity_name') is-invalid @enderror" id="activity_name" name="activity_name" value="{{ old('activity_name') }}">
+                    @error('activity_name')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+                
+                <div class="mb-3">
                     <label for="platform" class="form-label">Platform</label>
                     <input type="text" class="form-control @error('platform') is-invalid @enderror" id="platform" name="platform" value="{{ old('platform') }}">
                     @error('platform')
@@ -33,6 +43,9 @@
                     </div>
                     @enderror
                 </div>
+
+                
+
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
                     <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description">{{ old('description') }}</textarea>
