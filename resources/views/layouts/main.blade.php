@@ -53,9 +53,12 @@
   <script>
     $(document).ready(function() {
       @if (session()->has('success'))
-        toastr.success('{{ session('success')}}','SUCCESS!');
-      @elseif(session()->has('error'))
-        toastr.error('{{ session('error')}}','FAILED!');
+      toastr.success('{{ session('
+        success ')}}', 'SUCCESS!');
+
+      @elseif (session()->has('error'))
+      toastr.error('{{ session('
+        error ')}}', 'FAILED!');
       @endif
     });
   </script>

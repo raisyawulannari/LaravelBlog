@@ -4,152 +4,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Welcome</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            color: #333;
             margin: 0;
             padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f8; /* Warna latar belakang yang lembut */
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
-        .hero {
-            background: linear-gradient(135deg, #007bff, #00c2ff);
-            color: #fff;
-            padding: 100px 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://source.unsplash.com/random/1600x900') no-repeat center center;
-            background-size: cover;
-            opacity: 0.3;
-            z-index: -1;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-
-        .hero p {
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-            font-weight: 300;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            border: none;
-            border-radius: 50px;
-            padding: 10px 30px;
-            font-size: 1.25rem;
-            transition: background-color 0.3s ease;
-            color: #fff;
-        }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
-
-        .features {
-            background-color: #f0f8ff;
-            padding: 60px 0;
-        }
-
-        .features .feature-item {
-            text-align: center;
-            padding: 20px;
-            border-radius: 10px;
-            background-color: #fff;
+        header {
+            padding: 1rem 2rem;
+            background-color: #007bff; /* Biru cerah */
+            color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
         }
 
-        .features .feature-item:hover {
-            transform: translateY(-10px);
+        .header-title {
+            font-size: 2rem;
+            font-weight: bold;
         }
 
-        .feature-icon {
-            font-size: 3rem;
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #0056b3; /* Biru gelap saat hover */
+            transform: translateY(-2px);
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .welcome-card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            margin: auto;
+        }
+
+        .welcome-card h2 {
+            margin: 0 0 1rem 0;
+            font-size: 2.5rem;
             color: #007bff;
-            margin-bottom: 20px;
         }
 
-        .feature-title {
-            font-size: 1.5rem;
-            font-weight: 500;
-            margin-bottom: 10px;
-        }
-
-        .feature-description {
-            font-size: 1rem;
+        .welcome-card p {
+            margin: 0 0 1.5rem 0;
+            font-size: 1.2rem;
             color: #666;
+        }
+
+        .btn-get-started {
+            display: inline-block;
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .btn-get-started:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            padding: 1rem;
+            background-color: #007bff;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 
 <body>
+    <header>
+        <div class="header-title">MyApp</div>
+        <nav>
+            @auth
+                <a href="{{ route('dashboard') }}">Dashboard</a>
+                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            @else
+                <a href="{{ route('login') }}">Login</a>
+                <a href="{{ route('register') }}">Register</a>
+            @endauth
+        </nav>
+    </header>
 
-    <div class="hero">
-        <div class="container">
-            <h1>Welcome to the Blog Management System</h1>
-            <p>Manage your blog posts efficiently and effectively.</p>
-            <a href="{{ route('posts.index') }}" class="btn btn-primary btn-lg">Go to Posts</a>
+    <main>
+        <div class="welcome-card">
+            <h2>Welcome to MyApp</h2>
+            <p>We are delighted to have you here. Explore our platform and start your journey with us.</p>
+            @guest
+                <a href="{{ route('login') }}" class="btn-get-started">Get Started</a>
+            @endguest
         </div>
-    </div>
+    </main>
 
-    <div class="features">
-        <div class="container">
-            <div class="row">
-                <!-- Example feature item -->
-                <div class="col-md-4">
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fa fa-pencil"></i> <!-- Add icon if needed -->
-                        </div>
-                        <div class="feature-title">Easy Editing</div>
-                        <div class="feature-description">Quickly edit your posts with our user-friendly editor.</div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fa fa-eye"></i> <!-- Add icon if needed -->
-                        </div>
-                        <div class="feature-title">Preview Changes</div>
-                        <div class="feature-description">See how your posts look before publishing them.</div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fa fa-cogs"></i> <!-- Add icon if needed -->
-                        </div>
-                        <div class="feature-title">Customizable</div>
-                        <div class="feature-description">Adjust settings and customize your blog experience.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <footer>
+        <p>&copy; {{ date('Y') }} My Application. All Rights Reserved.</p>
+    </footer>
 </body>
 
 </html>
